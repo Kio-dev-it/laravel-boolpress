@@ -21,8 +21,10 @@
             
                 @foreach ($posts as $post)
                     <div class="blog-post">
-                        <h2 class="blog-post-title">{{$post['title']}}</h2>
-                        <p class="blog-post-meta">{{$post['created_at']}} by {{$post['author']}}</p>
+                        <a href="{{route('blog.show', $post['slug'])}}">
+                            <h2 class="blog-post-title">{{$post['title']}}</h2>
+                        </a>
+                        <p class="blog-post-meta">{{$post['created_at']->diffForHumans()}} by {{$post['author']}}</p>
                         
                         <p>{{$post['content']}}</p>
                     </div><!-- /.blog-post -->
