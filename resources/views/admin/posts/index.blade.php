@@ -2,6 +2,13 @@
 
 @section('pageContent')
     <h2 class="ml-5">Tutti i post</h2>
+
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
         
     <table class="table table-striped">
         <thead class="thead-dark">
