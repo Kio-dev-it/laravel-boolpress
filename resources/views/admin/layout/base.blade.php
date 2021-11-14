@@ -10,6 +10,8 @@
 </head>
 <body>
 
+    @include('admin.partials.header')
+
     <main>
         <div class="container">
             @yield('pageContent')
