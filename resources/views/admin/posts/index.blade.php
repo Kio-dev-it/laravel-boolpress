@@ -24,6 +24,11 @@
                     <td>{{$post['created_at']}}</td>
                     <td>
                         <a href="{{route('admin.posts.show', $post['id'])}}"><button type="button" class="btn btn-primary">Visualizza</button></a>
+                        <form action="{{route('admin.posts.destroy', $post['id'])}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Elimina</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
