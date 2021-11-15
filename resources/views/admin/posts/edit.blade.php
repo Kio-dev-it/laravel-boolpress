@@ -11,10 +11,6 @@
             <input type="text" name="title" class="form-control" id="title" placeholder="Inserisci qui il titolo del tuo post" value="{{old('title') ? old('title') : $post['title']}}">
         </div>
         <div class="form-group">
-            <label for="slug">Slug</label>
-            <input type="text" name="slug" class="form-control" id="slug" placeholder="Inserisci qui lo slug del tuo post" value="{{old('slug') ? old('slug') : $post['slug']}}">
-        </div>
-        <div class="form-group">
             <label for="content">Contenuto del post</label>
             <textarea type="text" rows="8" name="content" class="form-control" id="content">{{old('content') ? old('content') : $post['content']}}</textarea>
         </div>

@@ -9,6 +9,13 @@ use App\Post;
 
 class PostController extends Controller
 {
+
+    protected $validationRules = [
+        'title' => 'string|required|max:150',
+        'content' => 'string|required'
+    ];
+
+
     /**
      * Display a listing of the resource.
      *
@@ -38,10 +45,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $data = $request->all();
+        $request->validate($this->validationRules);
 
-        $newPost = Post::create($data);
+        $newPost = new Post();
+        $newPost->fill($request->all());
+        $newPost->slug = $this->getSlug($newPost->title);
+        $newPost->save();
         return redirect()->route('admin.posts.show', $newPost['id']);
     }
 
@@ -76,10 +85,16 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $data = $request->all();
+        $request->validate($this->validationRules);
 
-        $post->update($data);
-        return redirect()->route('admin.posts.show', $post['id']);
+        if($post->title != $request->title) {
+            $post->slug = $this->getSlug($request->title);
+        }
+
+
+        $post->fill($request->all());
+        $post->save();
+        return redirect()->route('admin.posts.index')->with('success', "Il post n. {$post['id']} è stato aggiornato");
     }
 
     /**
@@ -93,5 +108,22 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('success', "Il post n. {$post->id} è stato eliminato");
+    }
+
+    protected function getSlug($title)
+    {
+        $slug = Str::of($title)->slug('-');
+
+        $postExist = Post::where('slug', $slug)->first();
+        
+        $increment = 2;
+
+        while($postExist){
+            $slug = Str::of($title)->slug('-') . "-{$increment}";
+            $postExist = Post::where('slug', $slug)->first();
+            $increment++;
+        }
+
+        return $slug;
     }
 }
