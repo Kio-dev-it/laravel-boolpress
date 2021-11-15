@@ -11,6 +11,8 @@
 
     @include('guest.partials.header')
 
+    <h2>Ciccio</h2>
+
     @yield('pageContent')
 
     @include('guest.partials.footer')
