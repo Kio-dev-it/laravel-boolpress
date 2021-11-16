@@ -6,15 +6,15 @@
 
         <div class="form-group">
             <label for="title">Titolo</label>
-            <input type="text" name="title" class="form-control" id="title" placeholder="Inserisci qui il titolo del tuo post">
+            <input type="text" name="title" class="form-control" id="title" placeholder="Inserisci qui il titolo del tuo post" value="{{old('title')}}">
         </div>
         <div class="form-group">
             <label for="content">Contenuto del post</label>
-            <textarea type="text" rows="8" name="content" class="form-control" id="content"></textarea>
+            <textarea type="text" rows="8" name="content" class="form-control" id="content">{{old('content')}}</textarea>
         </div>
         <div class="form-group">
             <label for="author">Autore</label>
-            <input type="text" name="author" class="form-control" id="author" placeholder="Inserisci qui il tuo nome">
+            <input type="text" name="author" class="form-control" id="author" placeholder="Inserisci qui il tuo nome" value="{{old('author')}}">
         </div>
         <button type="submit" class="btn btn-primary">Salva il post</button>
     </form>
