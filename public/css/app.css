@@ -10134,3 +10134,16 @@ a {
   text-decoration: none;
   color: #000;
 }
+
+/* Homepage */
+.homepage_view {
+  height: calc(100vh - 58px);
+}
+.homepage_view .mega-text {
+  width: 100%;
+  font-size: 2.75rem;
+}
+.homepage_view a {
+  display: inline-block;
+  width: 100%;
+}

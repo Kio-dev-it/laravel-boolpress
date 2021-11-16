@@ -1,4 +1,4 @@
-@extends('guest.layout.base')
+@extends('layouts.front-app')
 
 @section('pageContent')
     <div class="container">

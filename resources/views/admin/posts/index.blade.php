@@ -1,4 +1,4 @@
-@extends('admin.layout.base')
+@extends('layouts.back-app')
 
 @section('pageContent')
     <h2 class="ml-5">Tutti i post</h2>

@@ -1,4 +1,4 @@
-@extends('admin.layout.base')
+@extends('layouts.back-app')
 
 @section('pageContent')
     <form class="mt-5" action="{{route('admin.posts.store')}}" method="POST">

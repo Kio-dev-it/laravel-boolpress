@@ -1,4 +1,4 @@
-@extends('admin.layout.base')
+@extends('layouts.back-app')
 
 @section('pageContent')
     <h1 class="mt-5">{{$post->title}}</h1>
