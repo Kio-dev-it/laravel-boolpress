@@ -16,6 +16,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Titolo</th>
                 <th scope="col">Slug</th>
+                <th scope="col">Categoria</th>
                 <th scope="col">Autore</th>
                 <th scope="col">Creazione</th>
                 <th scope="col">Azioni</th>
@@ -27,6 +28,7 @@
                     <th scope="row">{{$post['id']}}</th>
                     <td>{{$post['title']}}</td>
                     <td>{{$post['slug']}}</td>
+                    <td>{{$post['category'] != null ? $post['category']['name'] : ""}}</td>
                     <td>{{$post['author']}}</td>
                     <td>{{$post['created_at']}}</td>
                     <td>

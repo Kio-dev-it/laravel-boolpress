@@ -16,6 +16,12 @@
             <label for="author">Autore</label>
             <input type="text" name="author" class="form-control" id="author" placeholder="Inserisci qui il tuo nome" value="{{old('author')}}">
         </div>
-        <button type="submit" class="btn btn-primary">Salva il post</button>
+        <select name="category_id" id="category_id" class="form-control">
+            <option value="">-- Seleziona una categoria --</option>
+            @foreach ($categories as $category)
+                <option value="{{$category['id']}}">{{$category['name']}}</option>
+            @endforeach
+        </select>
+        <button type="submit" class="btn btn-primary my-3">Salva il post</button>
     </form>
 @endsection
