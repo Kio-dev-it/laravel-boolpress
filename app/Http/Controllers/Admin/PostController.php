@@ -14,7 +14,8 @@ class PostController extends Controller
     protected $validationRules = [
         'title' => 'string|required|max:150',
         'content' => 'string|required',
-        'category' => 'nullable|exists:categories,id'
+        'author' => 'string|required|max:80',
+        'category_id' => 'nullable|exists:categories,id'
     ];
 
 
