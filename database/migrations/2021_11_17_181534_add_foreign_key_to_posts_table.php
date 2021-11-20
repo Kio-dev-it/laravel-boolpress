@@ -20,7 +20,7 @@ class AddForeignKeyToPostsTable extends Migration
             // $table->foreign('category_id')
             //         ->references('id')
             //         ->on('categories');
-            $table->foreignId('category_id')->nullable()->constrained();
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
         });
     }
 
