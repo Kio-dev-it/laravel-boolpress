@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Post;
+use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -15,7 +16,8 @@ class PostController extends Controller
         'title' => 'string|required|max:150',
         'content' => 'string|required',
         'author' => 'string|required|max:80',
-        'category_id' => 'nullable|exists:categories,id'
+        'category_id' => 'nullable|exists:categories,id', 
+        'tags' => 'exists:tags,id'
     ];
 
 
@@ -38,7 +40,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -51,12 +54,13 @@ class PostController extends Controller
     {
         
         $request->validate($this->validationRules);
-
+        
         $newPost = new Post();
         $newPost->fill($request->all());
         $newPost->slug = $this->getSlug($newPost->title);
         $newPost->save();
-        return redirect()->route('admin.posts.show', $newPost['id']);
+        $newPost->tags()->attach($request["tags"]);
+        return redirect()->route('admin.posts.index')->with('success', "Il post è stato creato");
     }
 
     /**
@@ -79,7 +83,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -100,6 +106,8 @@ class PostController extends Controller
 
         $post->fill($request->all());
         $post->save();
+        // qui è da usare il sync perché altrimenti aggiunge ad ogni salvataggio i tag spuntati nell'edit incluse le ripetizioni, con il sync fa la cancellazione e poi l'attach
+        $post->tags()->sync($request["tags"]);
         return redirect()->route('admin.posts.index')->with('success', "Il post n. {$post['id']} è stato aggiornato");
     }
 

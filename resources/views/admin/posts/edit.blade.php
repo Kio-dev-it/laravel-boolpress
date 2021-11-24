@@ -44,6 +44,25 @@
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="form-group">
+            <p>Tags</p>
+            @foreach ($tags as $tag)
+                <div class="custom-control custom-checkbox">
+                    {{-- questo if catcha l'errore che viene passato al salvataggio del post qualunque esso sia mostrando i tag old se ci sono (quindi se sono stati 
+                    aggiornati in fase di edit, altrimenti si limita a mostrare quelli presenti nel DB) --}}
+                    @if ($errors->any())
+                        <input {{in_array($tag['id'], old("tags", [])) ? "checked" : null}} name="tags[]" value="{{$tag['id']}}" type="checkbox" class="custom-control-input" id="tag-{{$tag['id']}}">
+                    @else
+                    {{-- Questa serve a mostrare i tag relativi al post contenuti nel database  --}}
+                        <input name="tags[]" {{$post['tags']->contains($tag['id']) ? 'checked' : null}}  value="{{$tag['id']}}" type="checkbox" class="custom-control-input" id="tag-{{$tag['id']}}">
+                    @endif
+                        <label class="custom-control-label" for="tag-{{$tag['id']}}">{{$tag['name']}}</label>
+                </div>
+            @endforeach
+            @error('tags')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary">Salva Modifiche</button>
     </form>
     

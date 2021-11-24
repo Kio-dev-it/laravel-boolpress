@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Tag;
 
 class TagController extends Controller
 {
+
+    protected $validationRules = [
+        'name' => 'string|required|max:50',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::all();
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -24,7 +31,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tags.create');
     }
 
     /**
@@ -35,7 +42,13 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validationRules);
+
+        $newTag = new Tag();
+        $newTag->fill($request->all());
+        $newTag->slug = $this->getSlug($newTag->name);
+        $newTag->save();
+        return redirect()->route('admin.tags.index')->with('succes', "Il nuovo tag è stato creato");
     }
 
     /**
@@ -44,9 +57,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
-        //
+        return view('admin.tags.show', compact('tag'));
     }
 
     /**
@@ -55,9 +68,9 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Tag $tag)
     {
-        //
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
@@ -67,9 +80,15 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tag $tag)
     {
-        //
+        $request->validate($this->validationRules);
+
+        $tag->fill($request->all());
+        $tag->slug = $this->getSlug($request->name);
+
+        $tag->save();
+        return redirect()->route('admin.tags.index')->with('success', "Il tag n. {$tag['id']} è stato modificato");
     }
 
     /**
@@ -78,8 +97,16 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+
+        return redirect()->route('admin.tags.index')->with('success', "Il tag n. {$tag->id} è stato eliminato");
+    }
+
+    protected function getSlug($title)
+    {
+        $slug = Str::of($title)->slug('-');
+        return $slug;
     }
 }

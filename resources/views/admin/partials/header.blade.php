@@ -22,6 +22,12 @@
             <li class="nav-item">
               <a class="nav-link" href="{{route('admin.categories.create')}}">Crea una nuova categoria</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('admin.tags.index')}}">Tutti i tag</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('admin.tags.create')}}">Crea un nuovo tag</a>
+            </li>
           </ul>
         </div>
       </nav>

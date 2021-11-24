@@ -3,7 +3,6 @@
 @section('pageContent')
     <form class="mt-5" action="{{route('admin.posts.store')}}" method="POST">
     @csrf
-
         <div class="form-group">
             <label for="title">Titolo</label>
             <input type="text" name="title" class="form-control" id="title" placeholder="Inserisci qui il titolo del tuo post" value="{{old('title')}}">
@@ -33,6 +32,18 @@
                 @endforeach
             </select>
             @error('category_id')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <p>Tags</p>
+            @foreach ($tags as $tag)
+                <div class="custom-control custom-checkbox">
+                    <input name="tags[]" value="{{$tag['id']}}" type="checkbox" class="custom-control-input" id="tag-{{$tag['id']}}">
+                    <label class="custom-control-label" for="tag-{{$tag['id']}}">{{$tag['name']}}</label>
+                </div>
+            @endforeach
+            @error('tags')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
